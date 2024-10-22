@@ -150,7 +150,7 @@ function App() {
   };
 
   return (
-    <div class="h-full bg-gradient-to-br from-green-100 to-blue-100 p-4 text-gray-800">
+    <div class="min-h-screen bg-gradient-to-br from-green-100 to-blue-100 p-4 text-gray-800">
       <Show
         when={currentPage() === 'homePage'}
         fallback={
@@ -177,7 +177,7 @@ function App() {
           </div>
         }
       >
-        <div class="max-w-6xl mx-auto h-full">
+        <div class="max-w-6xl mx-auto">
           <div class="flex justify-between items-center mb-8">
             <h1 class="text-4xl font-bold text-green-600">Earth Facts</h1>
             <button
@@ -220,7 +220,7 @@ function App() {
                     onClick={handleGenerateFact}
                     disabled={loading()}
                   >
-                    <Show when={loading() && !generatedImage() && !audioUrl() && !markdownText()}>
+                    <Show when={loading()}>
                       Generating...
                     </Show>
                     <Show when={!loading()}>
@@ -253,7 +253,7 @@ function App() {
                   class={`w-full px-6 py-3 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition duration-300 ease-in-out transform hover:scale-105 ${loading() ? 'opacity-50 cursor-not-allowed' : ''} cursor-pointer`}
                   disabled={loading()}
                 >
-                  <Show when={loading() && !generatedImage() && !audioUrl() && !markdownText()}>
+                  <Show when={loading()}>
                     Generating...
                   </Show>
                   <Show when={!loading()}>
@@ -266,7 +266,7 @@ function App() {
                     class={`w-full px-6 py-3 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition duration-300 ease-in-out transform hover:scale-105 ${loading() ? 'opacity-50 cursor-not-allowed' : ''} cursor-pointer`}
                     disabled={loading()}
                   >
-                    <Show when={loading() && !generatedImage() && !audioUrl() && !markdownText()}>
+                    <Show when={loading()}>
                       Generating...
                     </Show>
                     <Show when={!loading()}>
@@ -279,7 +279,7 @@ function App() {
                   class={`w-full px-6 py-3 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition duration-300 ease-in-out transform hover:scale-105 ${loading() ? 'opacity-50 cursor-not-allowed' : ''} cursor-pointer`}
                   disabled={loading()}
                 >
-                  <Show when={loading() && !generatedImage() && !audioUrl() && !markdownText()}>
+                  <Show when={loading()}>
                     Generating...
                   </Show>
                   <Show when={!loading()}>

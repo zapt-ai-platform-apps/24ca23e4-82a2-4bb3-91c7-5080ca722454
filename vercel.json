@@ -9,9 +9,5 @@
       "destination": "/index.html"
     }
   ],
-  "functions": {
-    "api/*.js": {
-      "includeFiles": "./drizzle/**"
-    }
-  }
+  "functions": {}
 }

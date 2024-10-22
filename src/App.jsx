@@ -15,30 +15,30 @@ function App() {
   const [markdownText, setMarkdownText] = createSignal('');
 
   const checkUserSignedIn = async () => {
-    const { data: { user } } = await supabase.auth.getUser()
+    const { data: { user } } = await supabase.auth.getUser();
     if (user) {
-      setUser(user)
-      setCurrentPage('homePage')
+      setUser(user);
+      setCurrentPage('homePage');
     }
-  }
+  };
 
-  onMount(checkUserSignedIn)
+  onMount(checkUserSignedIn);
 
   createEffect(() => {
-    const authListener = supabase.auth.onAuthStateChange((_, session) => {
+    const { data: authListener } = supabase.auth.onAuthStateChange((_, session) => {
       if (session?.user) {
-        setUser(session.user)
-        setCurrentPage('homePage')
+        setUser(session.user);
+        setCurrentPage('homePage');
       } else {
-        setUser(null)
-        setCurrentPage('login')
+        setUser(null);
+        setCurrentPage('login');
       }
-    })
+    });
 
     return () => {
-      authListener.data.unsubscribe()
-    }
-  })
+      authListener?.unsubscribe();
+    };
+  });
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();
@@ -74,7 +74,8 @@ function App() {
         body: JSON.stringify(newFact()),
       });
       if (response.ok) {
-        setFacts([...facts(), newFact()]);
+        const savedFact = await response.json();
+        setFacts([...facts(), savedFact]);
         setNewFact({ title: '', description: '' });
       } else {
         console.error('Error saving fact');
@@ -85,8 +86,9 @@ function App() {
   };
 
   createEffect(() => {
-    if (!user()) return;
-    fetchFacts();
+    if (user()) {
+      fetchFacts();
+    }
   });
 
   const handleGenerateFact = async () => {
@@ -214,7 +216,7 @@ function App() {
                   </button>
                   <button
                     type="button"
-                    class={`flex-1 px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300 ease-in-out transform hover:scale-105 cursor-pointer ${loading() ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    class={`flex-1 px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300 ease-in-out transform hover:scale-105 ${loading() ? 'opacity-50 cursor-not-allowed' : ''} cursor-pointer`}
                     onClick={handleGenerateFact}
                     disabled={loading()}
                   >
@@ -248,7 +250,7 @@ function App() {
               <div class="space-y-4">
                 <button
                   onClick={handleGenerateImage}
-                  class={`w-full px-6 py-3 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition duration-300 ease-in-out transform hover:scale-105 cursor-pointer ${loading() ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  class={`w-full px-6 py-3 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition duration-300 ease-in-out transform hover:scale-105 ${loading() ? 'opacity-50 cursor-not-allowed' : ''} cursor-pointer`}
                   disabled={loading()}
                 >
                   <Show when={loading() && !generatedImage() && !audioUrl() && !markdownText()}>
@@ -261,7 +263,7 @@ function App() {
                 <Show when={newFact().title && newFact().description}>
                   <button
                     onClick={handleTextToSpeech}
-                    class={`w-full px-6 py-3 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition duration-300 ease-in-out transform hover:scale-105 cursor-pointer ${loading() ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    class={`w-full px-6 py-3 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition duration-300 ease-in-out transform hover:scale-105 ${loading() ? 'opacity-50 cursor-not-allowed' : ''} cursor-pointer`}
                     disabled={loading()}
                   >
                     <Show when={loading() && !generatedImage() && !audioUrl() && !markdownText()}>
@@ -274,7 +276,7 @@ function App() {
                 </Show>
                 <button
                   onClick={handleMarkdownGeneration}
-                  class={`w-full px-6 py-3 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition duration-300 ease-in-out transform hover:scale-105 cursor-pointer ${loading() ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  class={`w-full px-6 py-3 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition duration-300 ease-in-out transform hover:scale-105 ${loading() ? 'opacity-50 cursor-not-allowed' : ''} cursor-pointer`}
                   disabled={loading()}
                 >
                   <Show when={loading() && !generatedImage() && !audioUrl() && !markdownText()}>

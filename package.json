@@ -5,8 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "drizzle-kit push --force --config=./drizzle.config.js && vite build",
-    "serve": "vite preview"
+    "build": "vite build",
+    "serve": "vite preview",
+    "migrate": "drizzle-kit push --force --config=./drizzle.config.js"
   },
   "dependencies": {
     "solid-js": "^1.8.22",
